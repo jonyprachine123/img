@@ -201,8 +201,8 @@ def main():
         st.session_state.authenticated = False
         st.rerun()
     
-    st.title("🖼️ Image Compressor Pro")
-    st.markdown("### Professional Image Compression")
+    st.title("🖼️ Prachin Bangla  Image Compressor")
+    st.markdown("### V1")
     
     watermark_url = "https://www.prachinebangla.com/storage/app/public/company/2024-09-22-66f0852262497.webp"
     
