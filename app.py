@@ -116,7 +116,7 @@ def add_watermark(image, watermark):
         angle = random.uniform(-30, 30)
         rotated = watermark.rotate(angle, expand=True, resample=Image.Resampling.BICUBIC)
         
-        opacity = random.uniform(0.6, 0.6)
+        opacity = random.uniform(0.4, 0.4)
         r, g, b, a = rotated.split()
         a = a.point(lambda x: int(x * opacity))
         rotated = Image.merge('RGBA', (r, g, b, a))
