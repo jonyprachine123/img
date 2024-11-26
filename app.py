@@ -96,7 +96,7 @@ def add_watermark(image, watermark):
         rotated = watermark  # No rotation for center placement
         
         # Adjust opacity
-        opacity = 0.4  # Keep watermark semi-transparent
+        opacity = 0.35  # Keep watermark semi-transparent
         r, g, b, a = rotated.split()
         a = a.point(lambda x: int(x * opacity))
         rotated = Image.merge('RGBA', (r, g, b, a))
