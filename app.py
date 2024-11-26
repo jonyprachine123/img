@@ -61,37 +61,17 @@ def get_watermark(url):
         st.error(f"Error loading watermark: {str(e)}")
         return None
 
-def get_random_positions(img_width, img_height, watermark_width, watermark_height, count=4):
-    positions = []
-    padding = 20
-    
-    regions = [
-        (0, 0, img_width//2, img_height//2),
-        (img_width//2, 0, img_width, img_height//2),
-        (0, img_height//2, img_width//2, img_height),
-        (img_width//2, img_height//2, img_width, img_height),
-    ]
-    
-    random.shuffle(regions)
-    
-    for i in range(min(count, len(regions))):
-        region = regions[i]
-        x = random.randint(
-            region[0] + padding,
-            region[2] - watermark_width - padding
-        )
-        y = random.randint(
-            region[1] + padding,
-            region[3] - watermark_height - padding
-        )
-        positions.append((x, y))
-    
-    return positions
+def get_center_position(img_width, img_height, watermark_width, watermark_height):
+    # Calculate center position
+    x = (img_width - watermark_width) // 2
+    y = (img_height - watermark_height) // 2
+    return [(x, y)]
 
 def add_watermark(image, watermark):
     if watermark.mode != 'RGBA':
         watermark = watermark.convert('RGBA')
     
+    # Resize watermark to 25% of the smaller image dimension
     watermark_size = int(min(image.width, image.height) * 0.25)
     ratio = watermark.width / watermark.height
     watermark = watermark.resize(
@@ -103,24 +83,25 @@ def add_watermark(image, watermark):
     if img.mode != 'RGBA':
         img = img.convert('RGBA')
     
-    layer = Image.new('RGBA', img.size, (0,0,0,0))
+    layer = Image.new('RGBA', img.size, (0, 0, 0, 0))
     
-    num_watermarks = random.randint(1, 1)
-    positions = get_random_positions(
+    # Get center position for watermark
+    positions = get_center_position(
         img.width, img.height,
-        watermark.width, watermark.height,
-        num_watermarks
+        watermark.width, watermark.height
     )
     
     for pos in positions:
-        angle = random.uniform(-30, 30)
-        rotated = watermark.rotate(angle, expand=True, resample=Image.Resampling.BICUBIC)
+        # Optional: Add rotation or opacity changes here if needed
+        rotated = watermark  # No rotation for center placement
         
-        opacity = random.uniform(0.4, 0.4)
+        # Adjust opacity
+        opacity = 0.4  # Keep watermark semi-transparent
         r, g, b, a = rotated.split()
         a = a.point(lambda x: int(x * opacity))
         rotated = Image.merge('RGBA', (r, g, b, a))
         
+        # Paste watermark at center
         layer.paste(rotated, pos, rotated)
     
     watermarked = Image.alpha_composite(img, layer)
