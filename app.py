@@ -96,7 +96,7 @@ def add_watermark(image, watermark):
         rotated = watermark  # No rotation for center placement
         
         # Adjust opacity
-        opacity = 0.3  # Keep watermark semi-transparent
+        opacity = 0.4  # Keep watermark semi-transparent
         r, g, b, a = rotated.split()
         a = a.point(lambda x: int(x * opacity))
         rotated = Image.merge('RGBA', (r, g, b, a))
@@ -123,7 +123,7 @@ def compress_image(image, original_size_kb, watermark=None):
     
     # Target size calculation (always smaller than original)
     if original_size_kb <= 50:
-        target_size_kb = original_size_kb * 0.6  # 50% reduction for small images
+        target_size_kb = original_size_kb * 1.0  # no reduction for small images
     elif original_size_kb <= 100:
         target_size_kb = original_size_kb * 0.6  # 50% reduction for medium images
     elif original_size_kb <= 500:
