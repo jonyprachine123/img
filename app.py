@@ -105,7 +105,7 @@ def add_watermark(image, watermark):
     
     layer = Image.new('RGBA', img.size, (0,0,0,0))
     
-    num_watermarks = random.randint(3, 4)
+    num_watermarks = random.randint(1, 1)
     positions = get_random_positions(
         img.width, img.height,
         watermark.width, watermark.height,
