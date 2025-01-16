@@ -220,9 +220,9 @@ def main():
                         
                         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
                         st.download_button(
-                            label="⬇️ Download Compressed Image",
+                            label="⬇️ Download Processed Image",
                             data=compressed_bytes,
-                            file_name=f"{timestamp}_{uploaded_file.name}",
+                            file_name=uploaded_file.name,
                             mime="image/jpeg"
                         )
                 except Exception as e:
@@ -252,9 +252,9 @@ def main():
                             compressed_images.append((uploaded_file.name, compressed))
                         
                         zip_buffer = io.BytesIO()
-                        with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zip_file:
-                            for filename, data in compressed_images:
-                                zip_file.writestr(f"compressed_{filename}", data)
+                        with zipfile.ZipFile(zip_buffer, "w") as zip_file:
+                            for idx, (file, processed) in enumerate(zip(uploaded_files, compressed_images)):
+                                zip_file.writestr(file.name, processed[1])
                         
                         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
                         st.download_button(
@@ -279,7 +279,7 @@ def main():
     st.markdown(
         """
         <div style='text-align: center; color: #666;'>
-            <p>© Jony Image Compressor for Prachin Bangla.</p>
+            <p> Jony Image Compressor for Prachin Bangla.</p>
         </div>
         """,
         unsafe_allow_html=True
