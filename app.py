@@ -185,7 +185,7 @@ def main():
     st.title("🖼️ Prachin Bangla  Image Compressor")
     st.markdown("### V1")
     
-    watermark_url = "https://admin.prachinebangla.com/storage/app/public/company/2025-02-12-67ac529da3d7f.webp"
+    watermark_url = "https://raw.githubusercontent.com/jonyprachine123/img/refs/heads/main/logo.webp"
     
     mode = st.radio("Processing Mode", ["Single Image", "Multiple Images"], horizontal=True)
     
